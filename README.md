@@ -5,7 +5,8 @@
 **Full-stack Developer** — building clean, fast and reliable web applications with modern JavaScript, from REST APIs to polished user interfaces.
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-6c5ce7?style=for-the-badge&logo=googlechrome&logoColor=white)](https://portfolio-xnfb.onrender.com)
-[![Email](https://img.shields.io/badge/Email-tetrascloud--x27@gmail.com-00cec9?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tetraoscloud931@gmail.com)
+[![Email](https://img.shields.io/badge/Email-00cec9?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tetraoscloud931@gmail.com)
+[![npm](https://img.shields.io/badge/npm-Packages-0ae448?style=for-the-badge&logo=npm&logoColor=white)](#-open-source)
 
 </div>
 
@@ -18,6 +19,44 @@ I'm **MMK** — a full-stack developer focused on the JavaScript/TypeScript ecos
 Most of my work is **Arabic-first and RTL by design** — not an English layout flipped at the end, but interfaces that were built right-to-left from the first line of CSS.
 
 I care about the details that are easy to skip: loading and empty states, error handling that says something useful, `prefers-reduced-motion`, keeping a demo link alive after 15 idle minutes.
+
+## 🔭 Currently
+
+Building Arabic/RTL product surfaces in React, and pulling the parts I keep rewriting into reusable packages.
+
+## 📦 Open source
+
+### [`@tetraoscloud931-creator/react-rtl`](https://github.com/tetraoscloud931-creator/react-rtl)
+
+RTL primitives for React. Published to GitHub Packages.
+
+Most RTL libraries stop at `dir="rtl"`. This one treats the locale as **state** — a single provider owns it, direction derives from it, and every consumer reads from the same source instead of re-deriving `ar` → `rtl` in a dozen files.
+
+```bash
+npm install @tetraoscloud931-creator/react-rtl --registry=https://npm.pkg.github.com
+```
+
+```tsx
+import { LocaleProvider, useIsRTL, useNumberFormat } from '@tetraoscloud931-creator/react-rtl';
+
+function Price({ amount }: { amount: number }) {
+  const money = useNumberFormat({ style: 'currency', currency: 'SAR' });
+  return <span dir="auto">{money.format(amount)}</span>;
+}
+
+export function App() {
+  return (
+    <LocaleProvider locale="ar">
+      <Price amount={1250} />
+    </LocaleProvider>
+  );
+}
+```
+
+- `useDirection()` / `useIsRTL()` — from the provider, or live off `<html>` via `MutationObserver`
+- `useNumberFormat()` / `useDateTimeFormat()` — memoized per locale instead of rebuilt every render
+- `detectDirection()` — via `Intl.Locale#maximize`, so `az-Arab` is RTL and `ar-Latn` is LTR
+- Zero runtime dependencies, ESM + CJS + types, SSR-safe, 55 tests
 
 ## 🛠 Tech Stack
 
@@ -33,40 +72,30 @@ I care about the details that are easy to skip: loading and empty states, error 
 
 **Tooling**
 
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white) ![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white) ![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
 
 </div>
 
-## 🚀 Featured Work
+## 💼 Selected work
 
-### [TaskFlow](https://taskflow-client-p5r3.onrender.com) — Full-stack Todo App
+> Client and product repositories are private. Live deployments are linked.
 
-A production-style task manager: **React (Vite)** frontend, **Node.js + Express** API.
+**TaskFlow** — full-stack task manager, React (Vite) frontend on a Node + Express API.
+Priorities, smart due-date labels, debounced search, a stats dashboard, optimistic UI and skeleton
+loading. The API returns one `{ success, data, error }` envelope shape, with centralized validation,
+`helmet` / `cors` / `morgan`, and a persistence layer you can swap for any database.
+**[App](https://taskflow-client-p5r3.onrender.com)** · **[API](https://taskflow-api-l3o2.onrender.com)**
 
-- Priorities, smart due-date labels, debounced search, stats dashboard
-- Optimistic UI, skeleton loading, persisted dark/light theme
-- API returns consistent `{ success, data, error }` envelopes, with centralized validation and error handling
-- `helmet`, `cors` and `morgan` on every request; persistence layer is swappable for any database
+**Ez Café** — Arabic RTL café concept for Riyadh, written in TypeScript. Responsive menu, café
+information, location and contact, in a premium coffee-inspired design — laid out right-to-left from
+the start, not mirrored at the end.
 
-**[Live app](https://taskflow-client-p5r3.onrender.com)** · **[API](https://taskflow-api-l3o2.onrender.com)**
+**هضاب الخليج** — Node + Express API with SQLite and authentication, powering a separate frontend.
+Arabic product, Arabic-first data model.
 
----
-
-### [Ez Café](https://github.com/tetraoscloud931-creator/Ez-Caf-) — Arabic RTL Café Website
-
-A modern café concept for Riyadh, written in **TypeScript**. Responsive menu, café information, location and contact — in a premium coffee-inspired design, laid out right-to-left from the start.
-
----
-
-### [هضاب الخليج](https://github.com/tetraoscloud931-creator/hidab-alkhaleej-backend) — API & Authentication
-
-A Node/Express backend with SQLite and auth, powering a separate frontend. Arabic product, Arabic-first data model.
-
----
-
-### [3D Portfolio](https://portfolio-xnfb.onrender.com) — React Three Fiber
-
-A personal portfolio in 3D — React 19, Vite, Tailwind CSS and **React Three Fiber**, with GSAP and Framer Motion animation, glassmorphism, smooth scrolling via Lenis, and full dark/light support.
+**3D Portfolio** — React 19, Vite, Tailwind CSS and React Three Fiber, with GSAP and Framer Motion
+animation, glassmorphism, smooth scrolling via Lenis, and full dark/light support.
+**[Live](https://portfolio-xnfb.onrender.com)**
 
 ## 💡 What I care about
 
@@ -74,6 +103,7 @@ A personal portfolio in 3D — React 19, Vite, Tailwind CSS and **React Three Fi
 - **Clear contracts** — one response shape, one error shape, one validator
 - **Interfaces that explain themselves** — empty states, loading states, and errors that say what went wrong
 - **Code that outlives the demo** — a store you can swap, config you can move to env vars
+- **No long-lived secrets** — packages ship from CI using the built-in token, not a PAT on someone's laptop
 
 ## 📫 Get in touch
 
